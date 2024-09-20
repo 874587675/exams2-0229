@@ -1,7 +1,7 @@
 package org.example.mapper;
 
+import org.apache.ibatis.annotations.Param;
 import org.example.domain.Posts;
-import org.example.domain.Users;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,6 +12,9 @@ public interface PostsMapper {
     int insertPosts(Posts posts);
     
     //查看动态
-    List<Posts> getPosts(Users users);
+    List<Posts> getPosts(@Param("list") List<Integer> list,@Param("lastTime") String lastTime);
+
+    Posts selectPosts(Posts posts);
     
+    List<Integer> getAllFriendsByUserId(Integer userId);
 }

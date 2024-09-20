@@ -3,6 +3,7 @@ package org.example.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,8 +33,9 @@ public class Users implements Serializable {
     private String email;
 
     /**
-     *
+     *用户注册时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     private Date createdTime;
 
     private static final long serialVersionUID = 1L;

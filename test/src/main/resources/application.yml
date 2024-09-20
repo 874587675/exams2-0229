@@ -1,0 +1,112 @@
+server:
+  port: 8080
+spring:
+    #rabbitmq配置
+  rabbitmq:
+    host: 192.168.146.10
+    port: 5672
+    username: admin
+    password: 123456
+    listener:
+      simple:
+        retry:
+          enabled: true
+          max-attempts: 3  # 最大重试次数
+          backoff:
+            initial-interval: 1000  # 初始间隔（毫秒）
+            max-interval: 5000       # 最大间隔（毫秒）
+            multiplier: 2.0           # 增长因子
+  # 配置读写分离、以及分库分表操作
+  shardingsphere:
+    datasource:
+      names: ds-master-1, ds-slave01-1, ds-slave02-1, ds-master-2, ds-slave01-2, ds-slave02-2
+      ds-master-1:
+        type: com.zaxxer.hikari.HikariDataSource
+        driverClassName: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://192.168.146.10:3306/pub_1
+        username: root
+        password: 123456
+      ds-slave01-1:
+        type: com.zaxxer.hikari.HikariDataSource
+        driverClassName: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://192.168.146.10:3307/pub_1
+        username: root
+        password: 123456
+      ds-slave02-1:
+        type: com.zaxxer.hikari.HikariDataSource
+        driverClassName: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://192.168.146.10:3308/pub_1
+        username: root
+        password: 123456
+      ds-master-2:
+        type: com.zaxxer.hikari.HikariDataSource
+        driverClassName: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://192.168.146.10:3306/pub_2
+        username: root
+        password: 123456
+      ds-slave01-2:
+        type: com.zaxxer.hikari.HikariDataSource
+        driverClassName: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://192.168.146.10:3307/pub_2
+        username: root
+        password: 123456
+      ds-slave02-2:
+        type: com.zaxxer.hikari.HikariDataSource
+        driverClassName: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://192.168.146.10:3308/pub_2
+        username: root
+        password: 123456
+    
+    sharding:
+      master-slave-rules:
+        pr_ds:
+          master-data-source-name: ds-master-1
+          slave-data-source-names: ds-slave01-1, ds-slave02-1
+        pr_ds2:
+          master-data-source-name: ds-master-2
+          slave-data-source-names: ds-slave01-2, ds-slave02-2
+      default-database-strategy:
+        inline:
+          sharding-column: user_id  # 使用 user_id 进行库分片
+          algorithm-expression: ds-master-$->{user_id % 2 + 1}
+          
+      tables: 
+        posts:
+          actual-data-nodes: pr_ds.posts_1, pr_ds.posts_2, pr_ds2.posts_1, pr_ds2.posts_2
+          table-strategy: 
+            inline: 
+              sharding-column: user_id  # 使用 user_id 进行分表,使用post_id发现不合适，我想用时间create_time分片，但是没搞出来
+              algorithm-expression: posts_$->{user_id % 2 + 1}
+    props:
+      sql:
+        show: true  # 显示 SQL 日志
+    
+    #数据源配置
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://192.168.146.10:3306/pub?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+#    username: root
+#    password: 123456
+    #redis配置
+  redis:
+    host: 192.168.146.10
+    port: 6379
+  
+    
+#配置mybatis
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    
+#配置日志
+logging:
+  level:
+    root: info
+  pattern:
+    console: '%d{yyyy-MM-dd} [%thread] [%-5level] %logger{50} - %msg%n'
+    file: '%d{yyyy-MM-dd} [%thread] [%-5level] %logger{50} - %msg%n'
+  file:
+    path: d:/logs/
+

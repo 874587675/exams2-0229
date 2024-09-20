@@ -17,7 +17,7 @@ import java.util.List;
  **/
 
 public interface PostsService {
-    int insertPosts(Posts posts);
+    void insertPosts(Posts posts);
     
-    List<Posts> getPosts(Users users);
+    List<Posts> getPosts(Integer userId);
 }
