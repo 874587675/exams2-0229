@@ -13,6 +13,7 @@
         <module>demo</module>
         <module>commons2</module>
         <module>test</module>
+        <module>pay</module>
     </modules>
 
     <parent>
