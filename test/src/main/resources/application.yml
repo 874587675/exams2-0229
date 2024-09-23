@@ -91,8 +91,6 @@ spring:
   redis:
     host: 192.168.146.10
     port: 6379
-  
-    
 #配置mybatis
 mybatis:
   mapper-locations: classpath:mapper/**/*.xml

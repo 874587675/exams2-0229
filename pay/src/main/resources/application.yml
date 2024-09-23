@@ -1,0 +1,44 @@
+alipay:
+#  APPID
+  app_id: 9021000138628340
+#  应用私钥
+  merchant_private_key: MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCC0QkLuU2OEqQvUR5XH1G96G2KRHr+pRT7O6gcZVkrDtIMkBQLRRhPMWQhrQ0ufy4u9h9Y+n2UDnkfzFM6J9ArlMk3UP1QQqj34O35tUS1Ugl/I+arE6yKDBwbxvYGFdhVMGp0HCf+PEkRYKt3SCK8z4027j4cDlArMU5/5sSN1CQbMGE3Cx5LU2+e7Evl7gKVTQLprxgubOX0h+/uHo44tvYKNI1F82FBFSMInK85Uits0vE8NvuMH1k2r9qs/1I8wqjmGOiTnJ3dGZ59kaXlrpx094W7erj1ClQ99a+/mP4S5PtBrKF0Kh+NkcvSiXOYzAe4rzxKsmZUdYZ1RnolAgMBAAECggEAHIu62pkUCGWe+EhOQ5qs/rDifmKVKE4jtvL8qz2eaJvyUBV8mjz4ogdYH1Ug5D2SeWLx0jvO/WjvG3Y9zxny/h+YjP6aWFJDhtvJck0Q8jQ1qE3QPxKq+vDLjXAsLYXE0EohYLboLz0+gJFEuWG/Ws47tXnlib/B1LsMszJLP9txnOL4BGPCGk54TtgtfizX5C1/17dwK2Namhb2mtzB3uswhK/qR8fU0ZRgjC0ar9y0Siydk8RwbMBucNeFLAiYQMA34FVXGNtkI3DtGTpZ9tRr1bul51bK6wz6xA7EVCFHUCFgkyAOjIWV+NP2wiedzUWuftyXOjpE2sumxa2BIQKBgQDrimFZtQ3x7pQAm8871W6chedFLzgiWMky5DKFjqArTxb0mu72smVFR65Bo8RWOgMLcryAd/HBPMpB9P4J8bSegqS4AEJCPIsWnOEB7ofgVoDAVcBAivnYuoiq5SQl+HqSl5kBsecW9XOl1D/l0kog9aYHK+q+2Jur0FLwwa/V+QKBgQCOLfMnq07hwBrp8xVlKKPOzDDO1nTixfLtxUh/H4uesHdvOQZGApeRbqYfMhWkgPCkOwQGZJumTWI+mQiUnFPYIZNOPaf5fGs2LlGy6gUmXSOuJlmFZmiGsPnjCmvRlHdqOKO65k+ZIKQ1MSrPdjB3Q7FGXxCsp0f9f/2uU8KgjQKBgC+/FG7f4dzKFRxueTrS0CJQjooawVFNGDQFyCwEtnkxBiE9ivVdQmQh3LQXo4QrLFTUxFtydQJL9WAbbqfLZGbBauyVuNi+dx91W7NNjCOwxVa3y0oKIg2J+oxR+NrtnMM8kdqjGoov5WqXNQC8eSRnR2mqwGJBfIT+rOF7Ec7ZAoGAaQTXzj1jDqzvNE8xRn82P9HjW2RdAgRk4+wNGJkccCK4lZbxY1UWz32DhxdflRsIpMZSusYlkjkmkEZJaDvwUny6adhw8n9MUcD058qj8ypo6IG7LiXun06pxWI1MaEQc41SowLrWJgbso6WqJcMRYvirbAaiO0m58BaiSGlaSECgYAH7kBqW3aWgCx9Dguy3SxqK7NoZX6SnAobz8UEFatUTSByCHE7BZu7r+R8EUol6QWSb0YxRfX1X0UU3mJz8mypMPytS1i30KHn9I8zndTRu6f5cfmWMB4h49ZJdloV2si+kOhhm4UY3Se/5KMOJN0iSXbUM52OAQdJEuECnx/CeA==
+#  支付宝公钥
+  alipay_public_key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApexvahz1cAD2NwDWWAul42nIwHnua2oKr+2iU5KvhCKu2jbFD8uEPrpU+vkCnCoRPjTsp6H+oxF7zQCA06lvUWM2kQkL7SSEjLN1o2P7LEfayVJRAZBqxCAbumSDezvk7qkcEMWHTBEt1l0ziPMeplFu1/wruwPwfqIHCcJb8EPjeMIrLywFIhbPGasgDTPoeK4x0iUHkxS/rMPRwhCUuBqUytyWDA4H7eAJyXObFxg2wLZO22t11zW7PoZaDCoswqQlJ5lNN1dgAkd/ejbnDDBxzcWW3IYEXbfXrVo9uUgK21s33yXjvaMf2JTRIc2OIsgGtiLBgY5xiqPooii0PwIDAQAB
+#  支付宝异步通知路径,付款完毕后会异步调用本项目的方法,必须为公网地址
+  notify_url: http://localhost:8081/
+#  支付宝同步通知路径,也就是当付款完毕后跳转本项目的页面,可以不是公网地址
+  return_url: http://localhost:8081/alipay/return_url
+#  这是沙箱接口路径,正式路径为https://openapi.alipay.com/gateway.do
+  gatewayUrl: https://openapi-sandbox.dl.alipaydev.com/gateway.do
+#  签名方式
+  sign_type: RSA2
+  charset: utf-8
+  log_path: log/alipaylog
+
+
+server:
+  port: 8081
+
+spring:
+  rabbitmq:
+    host: 192.168.146.10
+    port: 5672
+    username: admin
+    password: 123456
+  redis:
+    host: 192.168.146.10
+    port: 6379
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.146.10:3306/mydb?useSSL=false&serverTimezone=UTC&characterEncoding=utf8
+    username: root
+    password: 123456
+
+#配置mybatis
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+       
